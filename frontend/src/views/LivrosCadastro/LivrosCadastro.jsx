@@ -1,3 +1,5 @@
+// components/LivrosCadastro.js
+
 import React, { useState } from 'react';
 import Header from '../../components/Header/Header';
 import "./index.scss";
@@ -11,7 +13,8 @@ const LivrosCadastro = () => {
     titulo: '',
     num_paginas: '',
     isbn: '',
-    editora: ''
+    editora: '',
+    link: '' // Adicione o estado para o link do livro
   });
   const [errorMessage, setErrorMessage] = useState('');
 
@@ -22,16 +25,16 @@ const LivrosCadastro = () => {
         titulo: livro.titulo,
         num_paginas: Number(livro.num_paginas),
         isbn: livro.isbn,
-        editora: livro.editora
+        editora: livro.editora,
+        link: livro.link // Inclua o link no corpo da requisição
       };
 
       // Validar se todos os campos obrigatórios foram preenchidos
-      if (!livro.id || !livro.titulo || !livro.num_paginas || !livro.isbn || !livro.editora) {
+      if (!livro.id || !livro.titulo || !livro.num_paginas || !livro.isbn || !livro.editora || !livro.link) {
         setErrorMessage('Todos os campos são obrigatórios.');
         return;
       }
       
-
       await LivrosService.createLivro(body);
       alert('Livro cadastrado com sucesso!');
       document.getElementById('formulario').reset();
@@ -69,6 +72,10 @@ const LivrosCadastro = () => {
             <div className='form-group'>
               <label>Editora</label>
               <input type="text" id='editora' required onChange={(event) => { setLivro({ ...livro, editora: event.target.value })}} />
+            </div> 
+            <div className='form-group'>
+              <label>Link</label>
+              <input type="text" id='link' required onChange={(event) => { setLivro({ ...livro, link: event.target.value })}} />
             </div> 
             <div className='form-group'>
               <button type="button" onClick={createLivro}>Cadastrar Livro</button>  
